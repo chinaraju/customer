@@ -26,6 +26,7 @@ services:
     
   # mysqldb:
   #   image: mysql:5.7
+  db:
     networks:
       - springboot-customer
   #   environment:

@@ -25,7 +25,7 @@ services:
       - /data/springboot-app
     
   mysqldb:
-    image: mysql:8.0.19
+    image: mysql:5.7
     networks:
       - springboot-customer
     environment:

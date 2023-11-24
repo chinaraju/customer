@@ -1,16 +1,49 @@
 
-# version: '3'
+# # version: '3'
+# # services:
+# #   your-app:
+# #     image: customer
+# #     ports:
+# #       - "9092:9092"
+# #     environment:
+# #       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/china_ayur
+# #       SPRING_DATASOURCE_USERNAME: root
+# #       SPRING_DATASOURCE_PASSWORD: root
+
+
+# version: "3"
 # services:
-#   your-app:
-#     image: customer
+#   application:
+#     image: china324/customers
 #     ports:
 #       - "9092:9092"
+#     networks:
+#       - springboot-customer
+#     depends_on:
+#       - mysqldb
+#     volumes:
+#       - /data/springboot-app
+    
+#   # mysqldb:
+#   #   image: mysql:5.7
+#   db:
+   
+#   #   environment:
+#   #     - MYSQL_ROOT_PASSWORD=root
+#   #     - MYSQL_DATABASE=customer
+#   image: mysql
+#    networks:
+#       - springboot-customer
+#     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+#     # (this is just an example, not intended to be a production configuration)
+#     command: --default-authentication-plugin=mysql_native_password
+#     restart: always
 #     environment:
-#       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/china_ayur
-#       SPRING_DATASOURCE_USERNAME: root
-#       SPRING_DATASOURCE_PASSWORD: root
-
-
+#       MYSQL_ROOT_PASSWORD: root
+#     volumes:
+#       - /data/mysql
+# networks:
+#   springboot-customer:
 version: "3"
 services:
   application:
@@ -20,27 +53,21 @@ services:
     networks:
       - springboot-customer
     depends_on:
-      - mysqldb
+      - db
     volumes:
       - /data/springboot-app
-    
-  # mysqldb:
-  #   image: mysql:5.7
+
   db:
-   
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=root
-  #     - MYSQL_DATABASE=customer
-  image: mysql
-   networks:
+    image: mysql
+    networks:
       - springboot-customer
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - /data/mysql
+
 networks:
   springboot-customer:
+
